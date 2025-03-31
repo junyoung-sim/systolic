@@ -18,7 +18,7 @@ module SystolicCtrl
   output logic x_send_rdy,
 
   input  logic w_send_val,
-  output lgoci w_send_rdy,
+  output logic w_send_rdy,
 
   input  logic x_fifo_full  [size],
   input  logic x_fifo_empty [size],
@@ -64,7 +64,27 @@ module SystolicCtrl
 
   // Output Logic
 
+  always_comb begin
+    for(int i = 0; i < size; i++) begin
+      x_fifo_wen[i] = (state == `LOAD ? x_send_val : 0);
+      w_fifo_wen[i] = (state == `LOAD ? w_send_val : 0);
+    end
+    x_send_rdy = (state == `LOAD ? x_send_val : 0);
+    w_send_rdy = (state == `LOAD ? w_send_val : 0);
+  end
 
+  always_comb begin
+    mac_en        = (state == `MAC);
+    x_fifo_ren[0] = (state == `MAC);
+    w_fifo_ren[0] = (state == `MAC);
+  end
+  
+  always_ff @(posedge clk) begin
+    for(int i = 1; i < size; i++) begin
+      x_fifo_ren[i] <= (rst ? 0 : ((state == `MAC) & x_fifo_ren[i-1]));
+      w_fifo_ren[i] <= (rst ? 0 : ((state == `MAC) & w_fifo_ren[i-1]));
+    end
+  end
 
 endmodule
 
