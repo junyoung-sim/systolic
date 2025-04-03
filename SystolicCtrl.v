@@ -7,7 +7,7 @@
 
 module SystolicCtrl
 #(
-  parameter size = 16
+  parameter size = 4 // 4 (testing) 16 (synthesis)
 )(
   input  logic clk,
   input  logic rst,
@@ -28,7 +28,9 @@ module SystolicCtrl
   input  logic w_fifo_full  [size],
   input  logic w_fifo_empty [size],
   output logic w_fifo_wen   [size],
-  output logic w_fifo_ren   [size]
+  output logic w_fifo_ren   [size],
+
+  output logic [2:0] trace_state // only for cocotb testing
 );
 
   // Buffer Status
@@ -62,6 +64,8 @@ module SystolicCtrl
     end
   end
 
+  assign trace_state = state; // only for cocotb testing
+
   // Output Logic
 
   always_comb begin
@@ -76,11 +80,11 @@ module SystolicCtrl
   assign mac_en = ((state == `MAC) | (state == `OUT));
   
   always_ff @(posedge clk) begin
-    x_fifo_ren[0] <= (rst ? 0 : (((state == `LOAD) & full) | (state == `MAC)));
-    w_fifo_ren[0] <= (rst ? 0 : (((state == `LOAD) & full) | (state == `MAC)));
+    x_fifo_ren[0] <= (rst ? 0 : (((state == `LOAD) & full) | ((state == `MAC) & ~empty)));
+    w_fifo_ren[0] <= (rst ? 0 : (((state == `LOAD) & full) | ((state == `MAC) & ~empty)));
     for(int i = 1; i < size; i++) begin
-      x_fifo_ren[i] <= (rst ? 0 : ((state == `MAC) & x_fifo_ren[i-1]));
-      w_fifo_ren[i] <= (rst ? 0 : ((state == `MAC) & w_fifo_ren[i-1]));
+      x_fifo_ren[i] <= (rst ? 0 : ((state == `MAC) & ~empty & x_fifo_ren[i-1]));
+      w_fifo_ren[i] <= (rst ? 0 : ((state == `MAC) & ~empty & w_fifo_ren[i-1]));
     end
   end
 
