@@ -7,7 +7,7 @@
 
 module SystolicArray
 #(
-  parameter size  = 16,
+  parameter size  = 4,
   parameter nbits = 16,
   parameter dbits = 8
 )(
@@ -38,7 +38,7 @@ module SystolicArray
 
   serdes_Deserializer #(
     .N_SAMPLES (size),
-    .BIT_WIDTH (size)
+    .BIT_WIDTH (nbits)
   ) x_des (
     .clk      (clk),
     .reset    (rst),
@@ -61,7 +61,7 @@ module SystolicArray
 
   serdes_Deserializer #(
     .N_SAMPLES (size),
-    .BIT_WIDTH (size)
+    .BIT_WIDTH (nbits)
   ) w_des (
     .clk      (clk),
     .reset    (rst),
