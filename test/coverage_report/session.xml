@@ -1,0 +1,26 @@
+<session version="1.1" release="V-2023.12-SP2-1" timestp="2025-05-04 18:30:36 GMT">
+  <info>
+    <attr name="datetime" value="Sun May  4 14:30:50 2025
+"/>
+    <attr name="command" value="urg -dir ./sim_build/simv.vdb -format both -report ./coverage_report"/>
+    <attr name="top_instance" value="SystolicArray"/>
+  </info>
+  <hvp>
+    <datadef>
+      <metdef name="Line" type="ratio" aggregator="average" builtin="1" />
+      <metdef name="Toggle" type="ratio" aggregator="average" builtin="1" />
+    </datadef>
+  </hvp>
+  <old_coverage>
+  <scope type="top" name="top">
+    <metric name="Line" value="174/176" />
+    <metric name="Toggle" value="12818/12850" />
+  </scope>
+  <scope type="instance" name="top">
+  </scope>
+  <scope type="group" name="top">
+  </scope>
+  <scope type="assert" name="Statistics">
+  </scope>
+  </old_coverage>
+</session>
