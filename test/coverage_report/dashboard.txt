@@ -1,0 +1,27 @@
+Dashboard
+
+Date: Sun May  4 14:30:50 2025
+
+User: js2992
+
+Version: V-2023.12-SP2-1
+Command line: urg -dir ./sim_build/simv.vdb -format both -report ./coverage_report
+Number of tests: 1
+
+-------------------------------------------------------------------------------
+Total Coverage Summary 
+SCORE  LINE   TOGGLE 
+ 99.31  98.86  99.75 
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances 
+SCORE  LINE   TOGGLE NAME          
+ 99.31  98.86  99.75 SystolicArray 
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary 
+SCORE  LINE   TOGGLE 
+ 97.32  94.87  99.77 
+
